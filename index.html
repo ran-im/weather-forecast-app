@@ -16,12 +16,34 @@
             background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
             min-height: 100vh;
             color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .clock-sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .content-area {
+            flex: 1;
+            min-width: 0;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         header {
@@ -212,6 +234,245 @@
             color: #666;
         }
 
+        /* Analog Clock Styles */
+        .clock-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            position: sticky;
+            top: 20px;
+        }
+
+        .clock-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .analog-clock {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+            position: relative;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 50%;
+            border: 8px solid #2c3e50;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3), inset 0 2px 5px rgba(255,255,255,0.5);
+        }
+
+        .clock-face {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .clock-number {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .clock-number span {
+            display: inline-block;
+            transform-origin: center;
+        }
+
+        .clock-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: #e74c3c;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hand {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hour-hand {
+            width: 6px;
+            height: 50px;
+            background: #2c3e50;
+            transform: translate(-50%, -100%) rotate(0deg);
+        }
+
+        .minute-hand {
+            width: 4px;
+            height: 70px;
+            background: #34495e;
+            transform: translate(-50%, -100%) rotate(0deg);
+        }
+
+        .second-hand {
+            width: 2px;
+            height: 80px;
+            background: #e74c3c;
+            transform: translate(-50%, -100%) rotate(0deg);
+        }
+
+        .digital-time {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Currency Converter Styles */
+        .currency-converter {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .converter-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .converter-header h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .converter-form {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: end;
+            margin-bottom: 30px;
+        }
+
+        .currency-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .currency-input-group label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+
+        .currency-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .currency-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .currency-input:focus {
+            outline: none;
+            border-color: #74b9ff;
+        }
+
+        .currency-select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .currency-select:focus {
+            outline: none;
+            border-color: #74b9ff;
+        }
+
+        .convert-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .convert-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .convert-button:active {
+            transform: translateY(0);
+        }
+
+        .conversion-result {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .conversion-result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .result-details {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .exchange-rate-info {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
         .loading {
             text-align: center;
             padding: 50px;
@@ -243,6 +504,33 @@
             100% { transform: rotate(360deg); }
         }
 
+        @media (max-width: 1200px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .clock-sidebar {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+            .clock-container {
+                position: static;
+                width: 250px;
+            }
+
+            .converter-form {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .convert-button {
+                width: 100%;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -269,23 +557,155 @@
                 min-width: 80px;
                 padding: 10px;
             }
+
+            .clock-sidebar {
+                margin-bottom: 10px;
+            }
+
+            .analog-clock {
+                width: 150px;
+                height: 150px;
+            }
+
+            .hour-hand {
+                height: 40px;
+            }
+
+            .minute-hand {
+                height: 60px;
+            }
+
+            .second-hand {
+                height: 70px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Weather Forecast</h1>
-            <div class="location-info">
-                <span id="cityName">Loading location...</span> | 
-                <span id="currentDate"></span>
-            </div>
-        </header>
+    <header>
+        <h1>Weather Forecast</h1>
+        <div class="location-info">
+            <span id="cityName">Loading location...</span> | 
+            <span id="currentDate"></span>
+        </div>
+    </header>
 
-        <main id="weatherContent">
-            <div class="loading">
-                <div class="loading-spinner"></div>
-                <div>Loading weather data...</div>
+    <div class="main-container">
+        <aside class="clock-sidebar">
+            <div class="clock-container">
+                <div class="clock-title">Analog Clock</div>
+                <div class="analog-clock">
+                    <div class="clock-face">
+                        <div class="clock-number" style="transform: rotate(30deg);">
+                            <span style="transform: rotate(-30deg);">1</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(60deg);">
+                            <span style="transform: rotate(-60deg);">2</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(90deg);">
+                            <span style="transform: rotate(-90deg);">3</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(120deg);">
+                            <span style="transform: rotate(-120deg);">4</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(150deg);">
+                            <span style="transform: rotate(-150deg);">5</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(180deg);">
+                            <span style="transform: rotate(-180deg);">6</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(210deg);">
+                            <span style="transform: rotate(-210deg);">7</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(240deg);">
+                            <span style="transform: rotate(-240deg);">8</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(270deg);">
+                            <span style="transform: rotate(-270deg);">9</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(300deg);">
+                            <span style="transform: rotate(-300deg);">10</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(330deg);">
+                            <span style="transform: rotate(-330deg);">11</span>
+                        </div>
+                        <div class="clock-number" style="transform: rotate(0deg);">
+                            <span style="transform: rotate(0deg);">12</span>
+                        </div>
+                        <div class="hand hour-hand" id="hourHand"></div>
+                        <div class="hand minute-hand" id="minuteHand"></div>
+                        <div class="hand second-hand" id="secondHand"></div>
+                        <div class="clock-center"></div>
+                    </div>
+                </div>
+                <div class="digital-time" id="digitalTime">00:00:00</div>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <div class="container">
+                <div id="weatherContent">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <div>Loading weather data...</div>
+                    </div>
+                </div>
+
+                <div class="currency-converter">
+                    <div class="converter-header">
+                        <h2>Currency Converter</h2>
+                    </div>
+                    <div class="converter-form">
+                        <div class="currency-input-group">
+                            <label for="fromAmount">Amount</label>
+                            <div class="currency-input-wrapper">
+                                <input type="number" id="fromAmount" class="currency-input" placeholder="Enter amount" value="1" step="0.01">
+                                <select id="fromCurrency" class="currency-select">
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="GBP">GBP</option>
+                                    <option value="JPY">JPY</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="AUD">AUD</option>
+                                    <option value="CHF">CHF</option>
+                                    <option value="CNY">CNY</option>
+                                    <option value="INR">INR</option>
+                                    <option value="MXN">MXN</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button class="convert-button" onclick="convertCurrency()">Convert</button>
+                        
+                        <div class="currency-input-group">
+                            <label for="toAmount">Result</label>
+                            <div class="currency-input-wrapper">
+                                <input type="text" id="toAmount" class="currency-input" readonly placeholder="Result">
+                                <select id="toCurrency" class="currency-select">
+                                    <option value="EUR">EUR</option>
+                                    <option value="USD">USD</option>
+                                    <option value="GBP">GBP</option>
+                                    <option value="JPY">JPY</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="AUD">AUD</option>
+                                    <option value="CHF">CHF</option>
+                                    <option value="CNY">CNY</option>
+                                    <option value="INR">INR</option>
+                                    <option value="MXN">MXN</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="conversion-result" id="conversionResult">
+                        <div class="result-amount" id="resultAmount">0.00</div>
+                        <div class="result-details" id="resultDetails">0.00 USD = 0.00 EUR</div>
+                    </div>
+                    
+                    <div class="exchange-rate-info">
+                        <small>Exchange rates are approximate and may vary. Data provided for demonstration purposes.</small>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -577,8 +997,91 @@
             }
         }
 
+        // Currency Converter Functions
+        const exchangeRates = {
+            USD: { EUR: 0.92, GBP: 0.79, JPY: 149.50, CAD: 1.36, AUD: 1.52, CHF: 0.88, CNY: 7.24, INR: 83.12, MXN: 17.15 },
+            EUR: { USD: 1.09, GBP: 0.86, JPY: 162.50, CAD: 1.48, AUD: 1.65, CHF: 0.96, CNY: 7.87, INR: 90.35, MXN: 18.64 },
+            GBP: { USD: 1.27, EUR: 1.16, JPY: 189.12, CAD: 1.72, AUD: 1.92, CHF: 1.11, CNY: 9.16, INR: 105.18, MXN: 21.69 },
+            JPY: { USD: 0.0067, EUR: 0.0062, GBP: 0.0053, CAD: 0.0091, AUD: 0.010, CHF: 0.0059, CNY: 0.048, INR: 0.56, MXN: 0.11 },
+            CAD: { USD: 0.74, EUR: 0.68, GBP: 0.58, JPY: 110.00, AUD: 1.12, CHF: 0.65, CNY: 5.32, INR: 61.12, MXN: 12.61 },
+            AUD: { USD: 0.66, EUR: 0.61, GBP: 0.52, JPY: 98.36, CAD: 0.89, CHF: 0.58, CNY: 4.76, INR: 54.68, MXN: 11.29 },
+            CHF: { USD: 1.14, EUR: 1.04, GBP: 0.90, JPY: 169.89, CAD: 1.55, AUD: 1.72, CNY: 8.22, INR: 94.46, MXN: 19.48 },
+            CNY: { USD: 0.14, EUR: 0.13, GBP: 0.11, JPY: 20.65, CAD: 0.19, AUD: 0.21, CHF: 0.12, INR: 11.48, MXN: 2.37 },
+            INR: { USD: 0.012, EUR: 0.011, GBP: 0.0095, JPY: 1.80, CAD: 0.016, AUD: 0.018, CHF: 0.011, CNY: 0.087, MXN: 0.21 },
+            MXN: { USD: 0.058, EUR: 0.054, GBP: 0.046, JPY: 8.72, CAD: 0.079, AUD: 0.089, CHF: 0.051, CNY: 0.42, INR: 4.85 }
+        };
+
+        function convertCurrency() {
+            const fromAmount = parseFloat(document.getElementById('fromAmount').value);
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            
+            if (isNaN(fromAmount) || fromAmount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            
+            let result;
+            if (fromCurrency === toCurrency) {
+                result = fromAmount;
+            } else {
+                const rate = exchangeRates[fromCurrency][toCurrency];
+                result = fromAmount * rate;
+            }
+            
+            document.getElementById('toAmount').value = result.toFixed(2);
+            
+            const resultDiv = document.getElementById('conversionResult');
+            document.getElementById('resultAmount').textContent = `${result.toFixed(2)} ${toCurrency}`;
+            document.getElementById('resultDetails').textContent = 
+                `${fromAmount.toFixed(2)} ${fromCurrency} = ${result.toFixed(2)} ${toCurrency}`;
+            
+            resultDiv.classList.add('show');
+        }
+
+        // Analog Clock Functions
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            
+            // Calculate angles
+            const hourAngle = (hours % 12) * 30 + minutes * 0.5;
+            const minuteAngle = minutes * 6 + seconds * 0.1;
+            const secondAngle = seconds * 6;
+            
+            // Update hands
+            document.getElementById('hourHand').style.transform = 
+                `translate(-50%, -100%) rotate(${hourAngle}deg)`;
+            document.getElementById('minuteHand').style.transform = 
+                `translate(-50%, -100%) rotate(${minuteAngle}deg)`;
+            document.getElementById('secondHand').style.transform = 
+                `translate(-50%, -100%) rotate(${secondAngle}deg)`;
+            
+            // Update digital time
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('digitalTime').textContent = timeString;
+        }
+
+        // Currency converter enter key support
+        document.getElementById('fromAmount').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                convertCurrency();
+            }
+        });
+
         // Start the app
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+            updateClock();
+            setInterval(updateClock, 1000);
+        });
     </script>
 </body>
 </html>
