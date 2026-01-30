@@ -793,11 +793,8 @@
 
         async function fetchWeatherData(lat, lon) {
             try {
-                // Fallback demo data if API key is not set
-                if (API_KEY === 'YOUR_API_KEY_HERE') {
-                    return getDemoWeatherData();
-                }
-
+                console.log('Fetching weather for:', lat, lon);
+                
                 const currentResponse = await fetch(
                     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
                 );
@@ -806,47 +803,64 @@
                     `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
                 );
 
-                if (!currentResponse.ok || !forecastResponse.ok) {
-                    throw new Error('Weather data not available');
+                console.log('API responses status:', currentResponse.status, forecastResponse.status);
+
+                if (!currentResponse.ok) {
+                    throw new Error(`Current weather API failed: ${currentResponse.status} ${currentResponse.statusText}`);
+                }
+                if (!forecastResponse.ok) {
+                    throw new Error(`Forecast API failed: ${forecastResponse.status} ${forecastResponse.statusText}`);
                 }
 
                 const current = await currentResponse.json();
                 const forecast = await forecastResponse.json();
 
+                console.log('Weather data received:', { city: current.name, country: current.sys?.country });
+
                 return { current, forecast };
             } catch (error) {
-                console.error('API Error:', error);
-                return getDemoWeatherData();
+                console.error('API Error details:', error);
+                // Only fall back to demo data if there's a real API error
+                // Show error instead to help debug
+                document.getElementById('weatherContent').innerHTML = `
+                    <div class="error">
+                        <h3>Weather API Error</h3>
+                        <p>${error.message}</p>
+                        <p>Location: ${lat}, ${lon}</p>
+                        <p>API Key: ${API_KEY.substring(0, 10)}...</p>
+                        <button onclick="location.reload()" style="margin-top: 10px; padding: 10px 20px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Retry</button>
+                    </div>
+                `;
+                throw error; // Don't fall back to demo data
             }
         }
 
         function getDemoWeatherData() {
-            // Demo data for demonstration purposes
+            // Demo data for La Paz, Bolivia (more realistic)
             return {
                 current: {
-                    name: 'Demo City',
+                    name: 'La Paz',
+                    sys: {
+                        country: 'BO'
+                    },
                     main: {
-                        temp: 22,
-                        feels_like: 20,
-                        temp_min: 18,
-                        temp_max: 25,
-                        humidity: 65,
-                        pressure: 1013
+                        temp: 12,
+                        feels_like: 10,
+                        temp_min: 8,
+                        temp_max: 16,
+                        humidity: 45,
+                        pressure: 580
                     },
                     weather: [{
-                        main: 'Clear',
-                        description: 'clear sky',
-                        icon: '01d'
+                        main: 'Partly Cloudy',
+                        description: 'partly cloudy',
+                        icon: '02d'
                     }],
                     wind: {
-                        speed: 3.5,
-                        deg: 230
+                        speed: 2.5,
+                        deg: 180
                     },
-                    visibility: 10000,
-                    sys: {
-                        sunrise: Date.now() / 1000 - 3600 * 6,
-                        sunset: Date.now() / 1000 + 3600 * 6
-                    }
+                    visibility: 10000
                 },
                 forecast: {
                     list: generateHourlyForecast()
