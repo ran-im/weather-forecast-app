@@ -61,6 +61,23 @@
         .location-info {
             font-size: 1.2rem;
             opacity: 0.9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .location-name {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .location-icon {
+            font-size: 1.5rem;
         }
 
         .weather-main {
@@ -585,8 +602,14 @@
     <header>
         <h1>Weather Forecast</h1>
         <div class="location-info">
-            <span id="cityName">Loading location...</span> | 
-            <span id="currentDate"></span>
+            <div class="location-name">
+                <span class="location-icon">📍</span>
+                <span id="cityName">Loading location...</span>
+            </div>
+            <div class="location-name">
+                <span class="location-icon">📅</span>
+                <span id="currentDate"></span>
+            </div>
         </div>
     </header>
 
@@ -897,7 +920,12 @@
         function renderWeather(data) {
             const { current, forecast } = data;
             
-            document.getElementById('cityName').textContent = current.name;
+            // Enhanced location display with country
+            let locationName = current.name;
+            if (current.sys && current.sys.country) {
+                locationName += `, ${current.sys.country}`;
+            }
+            document.getElementById('cityName').textContent = locationName;
             document.getElementById('currentDate').textContent = getCurrentDate();
 
             const todayHourly = forecast.list.filter(item => {
