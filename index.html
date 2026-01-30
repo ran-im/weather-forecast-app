@@ -806,10 +806,18 @@
                 console.log('API responses status:', currentResponse.status, forecastResponse.status);
 
                 if (!currentResponse.ok) {
-                    throw new Error(`Current weather API failed: ${currentResponse.status} ${currentResponse.statusText}`);
+                    if (currentResponse.status === 401) {
+                        throw new Error('Invalid API Key - Please check your OpenWeatherMap API key');
+                    } else {
+                        throw new Error(`Current weather API failed: ${currentResponse.status} ${currentResponse.statusText}`);
+                    }
                 }
                 if (!forecastResponse.ok) {
-                    throw new Error(`Forecast API failed: ${forecastResponse.status} ${forecastResponse.statusText}`);
+                    if (forecastResponse.status === 401) {
+                        throw new Error('Invalid API Key - Please check your OpenWeatherMap API key');
+                    } else {
+                        throw new Error(`Forecast API failed: ${forecastResponse.status} ${forecastResponse.statusText}`);
+                    }
                 }
 
                 const current = await currentResponse.json();
@@ -820,19 +828,49 @@
                 return { current, forecast };
             } catch (error) {
                 console.error('API Error details:', error);
-                // Only fall back to demo data if there's a real API error
-                // Show error instead to help debug
+                // Show helpful error message with solutions
+                const isApiKeyError = error.message.includes('Invalid API Key') || error.message.includes('401');
+                
                 document.getElementById('weatherContent').innerHTML = `
-                    <div class="error">
-                        <h3>Weather API Error</h3>
-                        <p>${error.message}</p>
-                        <p>Location: ${lat}, ${lon}</p>
-                        <p>API Key: ${API_KEY.substring(0, 10)}...</p>
-                        <button onclick="location.reload()" style="margin-top: 10px; padding: 10px 20px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Retry</button>
+                    <div class="error" style="max-width: 600px; margin: 0 auto;">
+                        <h3>${isApiKeyError ? '🔑 API Key Issue' : '❌ Weather Data Error'}</h3>
+                        <p><strong>${error.message}</strong></p>
+                        
+                        ${isApiKeyError ? `
+                            <div style="text-align: left; margin: 20px 0;">
+                                <h4>🛠️ Solutions:</h4>
+                                <ol>
+                                    <li>Get a FREE API key from <a href="https://openweathermap.org/api" target="_blank" style="color: #fff; text-decoration: underline;">OpenWeatherMap</a></li>
+                                    <li>Sign up for free account</li>
+                                    <li>Get your API key (it may take 2 hours to activate)</li>
+                                    <li>Replace the API_KEY in the JavaScript</li>
+                                </ol>
+                            </div>
+                        ` : ''}
+                        
+                        <div style="margin: 20px 0;">
+                            <strong>Location: La Paz, Bolivia (${lat}, ${lon})</strong>
+                        </div>
+                        
+                        <div style="margin: 15px 0;">
+                            <button onclick="showDemoData()" style="margin: 5px; padding: 10px 20px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                🌤️ Show Demo Weather
+                            </button>
+                            <button onclick="location.reload()" style="margin: 5px; padding: 10px 20px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                🔄 Retry
+                            </button>
+                        </div>
                     </div>
                 `;
-                throw error; // Don't fall back to demo data
+                
+                // Don't fall back automatically - let user choose
+                throw error; 
             }
+        }
+
+        function showDemoData() {
+            const demoData = getDemoWeatherData();
+            renderWeather(demoData);
         }
 
         function getDemoWeatherData() {
