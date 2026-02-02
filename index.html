@@ -761,14 +761,6 @@
 
         async function getUserLocation() {
             return new Promise((resolve, reject) => {
-                // Set to La Paz, Bolivia coordinates
-                resolve({ 
-                    lat: -16.4897, 
-                    lon: -68.1193 
-                });
-                
-                // Original location detection code (commented out)
-                /*
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                         (position) => {
@@ -787,7 +779,6 @@
                     // Default to New York if geolocation not supported
                     resolve({ lat: 40.7128, lon: -74.0060 });
                 }
-                */
             });
         }
 
@@ -849,7 +840,7 @@
                         ` : ''}
                         
                         <div style="margin: 20px 0;">
-                            <strong>Location: La Paz, Bolivia (${lat}, ${lon})</strong>
+                            <strong>Location coordinates: (${lat}, ${lon})</strong>
                         </div>
                         
                         <div style="margin: 15px 0;">
@@ -874,12 +865,12 @@
         }
 
         function getDemoWeatherData() {
-            // Demo data for La Paz, Bolivia (more realistic)
+            // Demo data for demonstration purposes
             return {
                 current: {
-                    name: 'La Paz',
+                    name: 'Demo Location',
                     sys: {
-                        country: 'BO'
+                        country: 'DEMO'
                     },
                     main: {
                         temp: 12,
